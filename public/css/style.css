@@ -1,0 +1,8 @@
+@charset "utf-8";
+/* CSS Document */
+
+.login-page{
+	border:1px solid #ccc;
+	border-radius:6px;
+	margin-top:70px;
+}
