@@ -6,3 +6,6 @@
 	border-radius:6px;
 	margin-top:70px;
 }
+p.login-error{
+	color:red;
+}
