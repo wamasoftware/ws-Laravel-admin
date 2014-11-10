@@ -34,4 +34,4 @@ Route::get('logout', function()
 
 Route::post('/', 'HomeController@user');
 
-Route::resource('nerds', 'TopicController');
+Route::resource('topics', 'TopicController');

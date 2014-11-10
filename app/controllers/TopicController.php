@@ -9,7 +9,12 @@ class TopicController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+             // get all the nerds
+            $topics = Topic::all();
+
+            // load the view and pass the nerds
+            return View::make('topics.index')
+                ->with('topics', $topics);
 	}
 
 
@@ -20,9 +25,9 @@ class TopicController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+              //
+             return View::make('topics.create');
 	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -30,8 +35,30 @@ class TopicController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{
-		//
+	{	                                 
+               $rules = array(
+                   'name'       => 'required',
+              //    'email'      => 'required|email',                   
+               );
+               $validator = Validator::make(Input::all(), $rules);
+
+               // process the login
+               if ($validator->fails()) {
+                   return Redirect::to('topics/create')
+                       ->withErrors($validator)
+                       ->withInput(Input::except('password'));
+               } else {
+                   // store
+                   $topic = new Topic;
+                   $topic->name       = Input::get('name');
+                 //  $nerd->email      = Input::get('email');
+                 //  $nerd->nerd_level = Input::get('nerd_level');
+                   $topic->save();
+
+                   // redirect
+                   Session::flash('message', 'Successfully created topic!');
+                   return Redirect::to('topics');
+               }
 	}
 
 
