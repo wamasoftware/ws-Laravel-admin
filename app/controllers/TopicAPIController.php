@@ -13,7 +13,6 @@ class TopicAPIController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -40,6 +39,6 @@ class TopicAPIController extends \BaseController {
                 $statusCode = 400;
             }
             
-           return Response::json($response, $statusCode);            
+           return Response::xml($response, $statusCode);            
 	}
 }
