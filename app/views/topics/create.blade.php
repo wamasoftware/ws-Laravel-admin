@@ -30,12 +30,6 @@
         {{ Form::label('name', 'Name') }}
         {{ Form::text('name', Input::old('name'), array('class' => 'form-control')) }}
     </div>
-
-    <div class="form-group">
-        {{ Form::label('email', 'Email') }}
-        {{ Form::email('email', Input::old('email'), array('class' => 'form-control')) }}
-    </div>
-
     {{ Form::submit('Create the Topics!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}

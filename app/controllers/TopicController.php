@@ -70,7 +70,12 @@ class TopicController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+            // get the topic
+            $topic = Topic::find($id);
+
+            // show the view and pass the topic to it
+            return View::make('topics.show')
+                ->with('topic', $topic);
 	}
 
 
@@ -82,7 +87,12 @@ class TopicController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+            // get the nerd
+           $topic = Topic::find($id);
+
+           // show the edit form and pass the nerd
+           return View::make('topics.edit')
+               ->with('topic', $topic);
 	}
 
 
@@ -94,7 +104,28 @@ class TopicController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+           // validate
+           // read more on validation at http://laravel.com/docs/validation
+           $rules = array(
+               'name'       => 'required',
+           );
+           $validator = Validator::make(Input::all(), $rules);
+
+           // process the login
+           if ($validator->fails()) {
+               return Redirect::to('topics/' . $id . '/edit')
+                   ->withErrors($validator)
+                   ->withInput(Input::except('password'));
+           } else {
+               // store
+               $topic = Topic::find($id);
+               $topic->name = Input::get('name');
+               $topic->save();
+
+               // redirect
+               Session::flash('message', 'Successfully updated topic!');
+               return Redirect::to('topics');
+           }
 	}
 
 
@@ -105,9 +136,13 @@ class TopicController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id)
-	{
-		//
+	{	
+            // delete
+            $topic = Topic::find($id);
+            $topic->delete();
+
+            // redirect
+            Session::flash('message', 'Successfully deleted the topic!');
+            return Redirect::to('topics');
 	}
-
-
 }

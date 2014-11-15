@@ -30,8 +30,7 @@
     <thead>
         <tr>
             <td>ID</td>
-            <td>Name</td>
-            <td>Email</td>            
+            <td>Name</td>               
             <td>Actions</td>
         </tr>
     </thead>
@@ -39,14 +38,16 @@
     @foreach($topics as $key => $value)
         <tr>
             <td>{{ $value->id }}</td>
-            <td>{{ $value->name }}</td>
-            <td>{{ $value->email }}</td>           
+            <td>{{ $value->name }}</td>                   
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>
                 <!-- delete the nerd (uses the destroy method DESTROY /topics/{id} -->
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
-
+                {{ Form::open(array('url' => 'topics/' . $value->id, 'class' => 'pull-right')) }}
+                    {{ Form::hidden('_method', 'DELETE') }}
+                    {{ Form::submit('Delete this Topic', array('class' => 'btn btn-warning')) }}
+                {{ Form::close() }}
                 <!-- show the nerd (uses the show method found at GET /topics/{id} -->
                 <a class="btn btn-small btn-success" href="{{ URL::to('topics/' . $value->id) }}">Show this Topic</a>
 

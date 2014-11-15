@@ -35,3 +35,8 @@ Route::get('logout', function()
 Route::post('/', 'HomeController@user');
 
 Route::resource('topics', 'TopicController');
+
+Route::group(array('prefix' => 'api/v1'), function()
+{
+    Route::resource('getTopics', 'TopicAPIController');
+});
