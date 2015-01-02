@@ -5,7 +5,6 @@ class HomeController extends BaseController
 
     public function user()
     {
-
         // validate the info, create rules for the inputs
         $rules = array(
             'username' => 'required', // make sure the email is an actual email
@@ -16,13 +15,11 @@ class HomeController extends BaseController
         $validator = Validator::make(Input::all(), $rules);
 
         // if the validator fails, redirect back to the form
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return Redirect::to('login')
                             ->withErrors($validator) // send back all errors to the login form
                             ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
-        } else
-        {
+        } else {
 
             // get POST data
             $userdata = array(
@@ -30,15 +27,21 @@ class HomeController extends BaseController
                 'password' => Input::get('password')
             );
 
-            if (Auth::attempt($userdata))
-            {
-                // we are now logged in, go to admin
-                return Redirect::to('admin');
-            } else
-            {
+            if (Auth::attempt($userdata)) {
+                // we are now logged in, go to show topics
+                return Redirect::action('TopicController@index')->with('message', 'Login successfully!!!');
+                 //return Redirect::to('admin');
+            } else {
                 return Redirect::to('/');
             }
         }
+    }
+
+    // logout the user
+    public function doLogout()
+    {
+        Auth::logout(); 
+        return Redirect::to('login'); // redirect the user to the login screen
     }
 
 }

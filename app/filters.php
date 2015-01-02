@@ -69,7 +69,13 @@ Route::filter('guest', function()
 {
 	if (Auth::check()) return Redirect::to('/');
 });
-
+/*Route::filter('guest', function()
+{
+        if (Auth::check()) 
+                return Redirect::route('login')
+                        ->with('flash_notice', 'You are already logged in!');
+});
+*/
 /*
 |--------------------------------------------------------------------------
 | CSRF Protection Filter

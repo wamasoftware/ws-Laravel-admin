@@ -37,8 +37,7 @@ class TopicController extends \BaseController {
 	public function store()
 	{	                                 
                $rules = array(
-                   'name'       => 'required',
-              //    'email'      => 'required|email',                   
+                   'name'       => 'required',                   
                );
                $validator = Validator::make(Input::all(), $rules);
 
@@ -49,8 +48,11 @@ class TopicController extends \BaseController {
                        ->withInput(Input::except('password'));
                } else {
                    // store
+                   
                    $topic = new Topic;
                    $topic->name       = Input::get('name');
+                    $topic->description       = Input::get('description');
+                    $topic->status       = Input::get('status');
                  //  $nerd->email      = Input::get('email');
                  //  $nerd->nerd_level = Input::get('nerd_level');
                    $topic->save();
@@ -120,6 +122,8 @@ class TopicController extends \BaseController {
                // store
                $topic = Topic::find($id);
                $topic->name = Input::get('name');
+               $topic->description       = Input::get('description');
+               $topic->status       = Input::get('status');
                $topic->save();
 
                // redirect

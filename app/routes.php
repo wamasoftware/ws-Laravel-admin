@@ -1,19 +1,19 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
+  |--------------------------------------------------------------------------
+  | Application Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register all of the routes for an application.
+  | It's a breeze. Simply tell Laravel the URIs it should respond to
+  | and give it the Closure to execute when that URI is requested.
+  |
+ */
 
 Route::get('/', function()
 {
-     return View::make('loginForm');
+    return View::make('loginForm');
 });
 
 Route::get('login', function()
@@ -23,7 +23,7 @@ Route::get('login', function()
 
 Route::get('admin', array('before' => 'auth', function()
 {
-    return View::make('adminPage');
+return View::make('adminPage');
 }));
 
 Route::get('logout', function()
@@ -35,7 +35,11 @@ Route::get('logout', function()
 Route::post('/', 'HomeController@user');
 
 Route::resource('topics', 'TopicController');
-
+Route::group(array('before' => 'auth'), function()
+{
+    Route::resource('topics', 'TopicController', array('as' => 'topics'));
+});
+//Route::get('topics', 'TopicController');
 Route::group(array('prefix' => 'api/v1'), function()
 {
     Route::resource('getTopics', 'TopicAPIController');
@@ -56,11 +60,11 @@ Response::macro('xml', function($vars, $status = 200, array $header = array(), $
         if (is_array($value)) {
             if (is_numeric($key)) {
                 Response::xml($value, $status, $header, $rootElement, $xml->addChild(str_singular($xml->getName())));
-            } else {                
+            } else {
                 Response::xml($value, $status, $header, $rootElement, $xml->addChild($key));
             }
         } else {
-            $xml->addChildWithCDATA($key,$value);
+            $xml->addChildWithCDATA($key, $value);
         }
     }
     if (empty($header)) {
@@ -69,22 +73,25 @@ Response::macro('xml', function($vars, $status = 200, array $header = array(), $
     return Response::make($xml->asXML(), $status, $header);
 });
 
-  Class SimpleXMLElementExtended extends SimpleXMLElement {
+Class SimpleXMLElementExtended extends SimpleXMLElement
+{
 
-  /**
-   * Adds a child with $value inside CDATA
-   * @param unknown $name
-   * @param unknown $value
-   */
-  public function addChildWithCDATA($name, $value = NULL) {
-    $new_child = $this->addChild($name);
+    /**
+     * Adds a child with $value inside CDATA
+     * @param unknown $name
+     * @param unknown $value
+     */
+    public function addChildWithCDATA($name, $value = NULL)
+    {
+        $new_child = $this->addChild($name);
 
-    if ($new_child !== NULL) {
-      $node = dom_import_simplexml($new_child);
-      $no   = $node->ownerDocument;
-      $node->appendChild($no->createCDATASection($value));
+        if ($new_child !== NULL) {
+            $node = dom_import_simplexml($new_child);
+            $no = $node->ownerDocument;
+            $node->appendChild($no->createCDATASection($value));
+        }
+
+        return $new_child;
     }
 
-    return $new_child;
-  }
 }

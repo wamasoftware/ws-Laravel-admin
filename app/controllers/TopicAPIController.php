@@ -26,12 +26,16 @@ class TopicAPIController extends \BaseController {
                   'topics'  => []
                 ];
                 
-                $topics = Topic::all();
+               // $topics = Topic::all();
+                //get all topics
+                $topics = DB::table('topics')->where('status', '1')->get();
+               
                 foreach($topics as $topic){
 
                     $response['topics'][] = [
                         'id' => $topic->id,
-                        'name' => $topic->name
+                        'name' => $topic->name,
+                        'description' => $topic->description
                     ];
                 }
 

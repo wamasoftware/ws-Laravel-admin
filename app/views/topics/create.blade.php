@@ -5,6 +5,19 @@
 <head>
     <title>Look! I'm CRUDding</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <!-- include require jQuery library -->
+    {{ HTML::script('js/jquery.js') }}
+    {{ HTML::script('js/jquery.min.js') }}
+    {{ HTML::script('js/standard/ckeditor.js') }}
+    {{ HTML::script('js/adapters/jquery.js') }}
+    <!-- End - include require jQuery library -->
+    
+    <script type="text/javascript">
+        jQuery( document ).ready( function() {
+           jQuery( 'textarea#editor' ).ckeditor();
+	
+    } );
+    </script>
 </head>
 <body>
 <div class="container">
@@ -29,6 +42,10 @@
     <div class="form-group">
         {{ Form::label('name', 'Name') }}
         {{ Form::text('name', Input::old('name'), array('class' => 'form-control')) }}
+        {{ Form::label('description', 'Description') }}
+        {{ Form::textarea('description',Input::old('description'),array('class' => 'ckeditor')) }}
+        {{Form::label('stutus', 'Active/In-Active')}}
+        {{Form::checkbox('status')}}
     </div>
     {{ Form::submit('Create the Topics!', array('class' => 'btn btn-primary')) }}
 
