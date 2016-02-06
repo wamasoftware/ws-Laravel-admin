@@ -26,14 +26,19 @@ class HomeController extends BaseController
                 'username' => Input::get('username'),
                 'password' => Input::get('password')
             );
-
-            if (Auth::attempt($userdata)) {
+                             
+             $auth=Auth::attempt($userdata);
+       
+             if($auth)
+             {
                 // we are now logged in, go to show topics
                 return Redirect::action('TopicController@index')->with('message', 'Login successfully!!!');
                  //return Redirect::to('admin');
-            } else {
+             }
+             else
+             {
                 return Redirect::to('/');
-            }
+             }
         }
     }
 
