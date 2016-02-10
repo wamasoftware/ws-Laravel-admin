@@ -8,7 +8,7 @@
     <!-- include require jQuery library -->
     {{ HTML::script('js/jquery.js') }}
     {{ HTML::script('js/jquery.min.js') }}
-    {{ HTML::script('js/standard/ckeditor.js') }}
+    {{ HTML::script('js/standard/ckeditor/ckeditor.js') }}
     {{ HTML::script('js/adapters/jquery.js') }}
     <!-- End - include require jQuery library -->
     
@@ -43,7 +43,7 @@
         {{ Form::label('name', 'Name') }}
         {{ Form::text('name', Input::old('name'), array('class' => 'form-control')) }}
         {{ Form::label('description', 'Description') }}
-        {{ Form::textarea('description',Input::old('description'),array('class' => 'ckeditor')) }}
+        {{ Form::textarea('description',Input::old('description'),array('class'=>'form-control ckeditor')) }}
         {{Form::label('stutus', 'Active/In-Active')}}
         {{Form::checkbox('status')}}
     </div>

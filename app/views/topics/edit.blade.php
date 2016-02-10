@@ -5,20 +5,20 @@
     <head>
         <title>Look! I'm CRUDding</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        
+
         <!-- include require jQuery library -->
         {{ HTML::script('js/jquery.js') }}
         {{ HTML::script('js/jquery.min.js') }}
-        {{ HTML::script('js/standard/ckeditor.js') }}
+        {{ HTML::script('js/standard/ckeditor/ckeditor.js') }}
         {{ HTML::script('js/adapters/jquery.js') }}
         <!-- End - include require jQuery library -->
-        
+
         <script type="text/javascript">
-            jQuery(document).ready(function() {
+            jQuery(document).ready(function () {
                 jQuery('textarea#editor').ckeditor();
             });
         </script>
-        
+
     </head>
     <body>
         <div class="container">
@@ -40,12 +40,12 @@
             {{ HTML::ul($errors->all()) }}
 
             {{ Form::model($topic, array('route' => array('topics.update', $topic->id), 'method' => 'PUT')) }}
-            
+
             <div class="form-group">
                 {{ Form::label('name', 'Name') }}
                 {{ Form::text('name', null, array('class' => 'form-control')) }}
                 {{ Form::label('description', 'Description') }}
-                {{ Form::textarea('description',null,array('class' => 'ckeditor')) }}
+                {{ Form::textarea('description',null,array('class'=>'form-control ckeditor')) }}
                 {{Form::label('stutus', 'Active/In-Active')}}
                 {{Form::checkbox('status')}}
             </div>
